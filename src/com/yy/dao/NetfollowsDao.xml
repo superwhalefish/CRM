@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yy.dao.NetfollowsDao">
+	<select id="selectNetfollows" parameterType="fenye" resultType="Netfollows">
+		select * from netfollows
+		<where>
+			<if test="netfollows.studentName!=null and netfollows.studentName!=''">
+				and studentName like "%"#{netfollows.studentName}"%"
+			</if>
+			<if test="netfollows.followState!=null and netfollows.followState!=''">
+				and followState =#{netfollows.followState}
+			</if>
+			<if test="netfollows.followType!=null and netfollows.followType!=''">
+				and followType =#{netfollows.followType}
+			</if>
+			<if test="startTime!=null and startTime!=''">
+				and followTime &gt;=#{startTime}
+			</if>
+			<if test="endTime!=null and endTime!=''">
+				and followTime &lt;=#{endTime}
+			</if>
+			<if test="userId >0">
+				and userid=#{userId}
+			</if>
+		</where>
+		ORDER BY id DESC
+		limit #{page},#{pageSize}
+	</select>
+	<select id="countNetfollows" parameterType="fenye" resultType="int">
+		select count(*) from netfollows
+		<where>
+			<if test="netfollows.studentName!=null and netfollows.studentName!=''">
+				and studentName like "%"#{netfollows.studentName}"%"
+			</if>
+			<if test="netfollows.followState!=null and netfollows.followState!=''">
+				and followState =#{netfollows.followState}
+			</if>
+			<if test="netfollows.followType!=null and netfollows.followType!=''">
+				and followType =#{netfollows.followType}
+			</if>
+			<if test="startTime!=null and startTime!=''">
+				and followTime &gt;=#{startTime}
+			</if>
+			<if test="endTime!=null and endTime!=''">
+				and followTime &lt;=#{endTime}
+			</if>
+			<if test="userId >0">
+				and userid=#{userId}
+			</if>
+		</where>
+	</select>
+	<!-- 添加跟踪记录 SELECT studentId,studentName,followTime,content,userId,followstate,followType 
+		FROM `netfollows`; -->
+	<insert id="addNetfollows" parameterType="Netfollows">
+		insert into netfollows
+		(studentId,studentName,followTime,content,userId,followstate,followType)
+		values(#{studentId},#{studentName},#{followTime},#{content},#{userId},#{followState},#{followType})
+	</insert>
+</mapper>

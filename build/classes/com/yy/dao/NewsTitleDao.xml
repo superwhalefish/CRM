@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yy.dao.NewsTitleDao">
+	<!-- 添加分配信息 -->
+	<insert id="addNews" parameterType="newsTitle">
+		insert into
+		addnews(jinliId,jingliName,yuangongid,stuId,addtime)
+		values(#{jinLiId},#{jingLiName},#{yuanGongId},#{stuId},#{addTime})
+	</insert>
+	<!--查询今天分配多少学生  -->
+	<select id="selectNewsJinTian" parameterType="newsTitle" resultType="_int">
+	SELECT count(*) FROM `addnews` 
+	<where>
+	<if test=" addTime !=null and addTime != ''">
+	and addtime &lt;= #{addTime}
+	</if>
+	<if test=" jintian !=null and jintian != ''">
+	and addtime &gt;=#{jintian}
+	</if>
+	<if test="yuanGongId > 0">
+	 and yuangongid=#{yuanGongId}
+	</if>
+	</where>
+	 
+	</select>
+</mapper>
